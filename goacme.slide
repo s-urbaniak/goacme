@@ -1,0 +1,176 @@
+Acme and Go
+The integrating development environment
+
+Sergiusz Urbaniak
+
+sergiusz.urbaniak@gmail.com
+
+* What is Acme?
+
+.image shot.png
+
+An editor, shell, window system hybrid.
+
+* History of Acme
+
+- Developed by Rob Pike in the for the Plan9 OS
+
+- _plan9port_ Ported by Russ Cox to:
+1. Linux
+2. OSX
+3. *BSD (FreeBSD, NetBSD, OpenBSD)
+4. SunOS
+
+.link http://swtch.com/plan9port/
+
+- Standalone package: AcmeSAC
+
+.link https://code.google.com/p/acme-sac/
+
+* Notable users of Acme
+
+.image dmr_acme2.jpg
+
+- Dennis Ritchie
+- Rob Pike
+- Russ Cox
+
+Hmm ... worth a try, don't you think?
+
+* Acme?
+
+.image BHIC3.jpg 432 322
+
+- No code completion
+- Only 6 (that is _six_) keyboard shortcuts
+
+* Acme??
+
+.image BHIC4.jpg 432 322
+
+- No smart tab indentation, no word wrapping
+- No syntax highlighting, no color schemes
+
+* Acme??????
+
+.image BHIC5.jpg 432 322
+
+- No plugin API, no language binding
+- WAT?
+
+* Idioms
+
+- Heavy 3-button mouse usage, contrasting vim/emacs keyboard focus
+- _Everything_ is (editable) text, even commands, no seperation between commands and text
+
+PS: If you have no 3-button mouse, the touchpad works quite well.
+
+- Extend Acme by using:
+1. The sam command language (regular expressions on steroids, interaction with external commands)
+2. Plumbing (regular expression rules for invoking external programs)
+3. Using the 9P file system interface (focus of this talk)
+
+* 9P protocol
+
+- A distributed resource protocol initially developed for Plan9 (~ CIFS/VFS)
+- The most flexible solution to extend Acme
+
+* plan9port 9P protocol@OSX
+
+- 9P resources are available as Unix sockets
+- The namespace defines the directory they are available in
+
+	$ ls -l /tmp/ns.surbaniak.1/
+	total 0
+	srwxr-xr-x  1 surbaniak  wheel  0 May 12 11:04 acme
+	srwxr-xr-x  1 surbaniak  wheel  0 May 11 20:30 font
+	srwxr-xr-x  1 surbaniak  wheel  0 May  4 10:23 plumb
+
+* Golang code completion in Acme
+
+.image challenge.jpg
+
+- There is golang code completion in vim
+- How hard can it be to integrate https://github.com/nsf/gocode in Acme?
+
+* agoc Integration
+
+.image agoc.png
+
+* Why is Acme working for me?
+
+My usage pattern using an editor is as follows:
+
+1. 60% research (read documentation, sribbling notes, grepping source code)
+2. 20% _editing_ text (including regex)
+3. 20% _manipulating_ text through external commands (goimports, linting)
+
+* Editing text
+
+vim, Emacs, Sublime, Atom et al have excellent support for editing. Micro-movement ergonomics can be optimized to hell.
+
+Acme:
+
+- Minimal capabilities, merely good enough
+- has structural regular expressions (~chainable regex)
+
+* Extending other editors
+
+In a strict sense, none of the other editors allows "plug-ins", but "inside-ins".
+
+Vim needs plugins written in vimscript/Python, Emacs in Lisp, Sublime in Python, Atom in Coffeescript.
+
+What happens if you have plenty of them (my experience):
+
+- Your editor becomes slow, becomes Eclipse'ish
+- Plugins start to intertwine with others badly
+
+Reinvent most of the tools in their language binding:
+
+- Unix tools (i.e. sed, awk, grep, find, ack-grep)
+- Language specific tools (i.e. jsonlint/json-minify, goimports)
+
+* Extending Acme
+
+Acme implements a well-known set of language-agnostic protocols:
+
+- sam commands (|, >, <): Unix pipes
+- plumbing: process invocation
+- 9P protocol: local Unix sockets
+
+*Reuse* existing tools easily, write new ones in any language you want.
+
+* More about Acme
+
+.link http://research.swtch.com/acme A tour of Acme
+
+.link http://research.swtch.com/acme.pdf Acme: A User Interface for Programmers
+
+* The sam command language
+
+.link http://sam.cat-v.org/cheatsheet/ Sam quick reference card
+
+.link http://doc.cat-v.org/plan_9/4th_edition/papers/sam/ The Text Editor sam
+
+.link http://doc.cat-v.org/bell_labs/sam_lang_tutorial/sam_tut.pdf A tutorial for the sam command language
+
+* 9P resources
+
+.link https://www.usenix.org/legacy/events/usenix05/tech/freenix/full_papers/hensbergen/hensbergen.pdf Grave Robbers from Outer Space Using 9P2000 Under Linux
+
+.link http://lwn.net/Articles/137439/ A filesystem from Plan 9 space
+
+* Three button mouses???
+
+- HP Hewlett-Packard DY651A (~22 EUR)
+- Evoluent VerticalMouse 4 (~50 EUR)
+
+* My version of Acme
+
+.link https://bitbucket.org/surbaniak/acme
+
+Patches:
+
+- 2-1 chord using the Touchpad on OSX
+- Ctrl-G completion
+- green background (I have mouches volantes)

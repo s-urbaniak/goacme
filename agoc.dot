@@ -1,0 +1,23 @@
+digraph G {
+	acme [shape=none, image="spaceglenda100.png", label="\n\n\n\n\nACME", labelloc=b, pos="0,0!"]
+	acmeSocket [shape=none, image="socket50.jpg", label="\n\n\n\nUnix socket", labelloc=b, pos="1.5,0!"]
+
+	agoc [shape=none, image="glenda70.png", label="\n\n\n\n\agoc", labelloc=b, pos="3,0!"]
+	sEventReader [shape=none, image="gopher20.png", label="\n\n\n\n\neventReader\n(source window)", labelloc=b, pos="5,-1!"]
+	cEventReader [shape=none, image="gopher20.png", label="\n\n\n\n\neventReader\n(completion window)", labelloc=b, pos="5,1!"]
+
+	debouncer [shape=none, image="gopher20.png", label="\n\n\n\n\debouncer", labelloc=b, pos="7,-1!"]
+	looper [shape=none, image="gopher20.png", label="\n\n\n\n\ looper", labelloc=b, pos="8.5,-1!"]
+	osExit [shape=none, image="gopher20.png", label="\n\n\n\n\os.Exit(0)", labelloc=b, pos="7,1!"]
+
+	acme -> acmeSocket [dir="both"]
+	agoc -> acmeSocket [dir="both"]
+	agoc -> sEventReader
+	agoc -> cEventReader
+
+	sEventReader -> osExit
+	cEventReader -> osExit
+
+	sEventReader -> debouncer
+	debouncer -> looper
+}
