@@ -63,9 +63,8 @@ Hmm ... worth a try, don't you think?
 - Heavy 3-button mouse usage, contrasting vim/emacs keyboard focus
 - _Everything_ is (editable) text, even commands, no seperation between commands and text
 
-PS: If you have no 3-button mouse, the touchpad works quite well.
+Extend Acme by using:
 
-- Extend Acme by using:
 1. The sam command language (regular expressions on steroids, interaction with external commands)
 2. Plumbing (regular expression rules for invoking external programs)
 3. Using the 9P file system interface (focus of this talk)
@@ -80,11 +79,19 @@ PS: If you have no 3-button mouse, the touchpad works quite well.
 - 9P resources are available as Unix sockets
 - The namespace defines the directory they are available in
 
-	$ ls -l /tmp/ns.surbaniak.1/
+	$ cd /tmp/ns.surbaniak.1/
+	
+	$ ls -l
 	total 0
 	srwxr-xr-x  1 surbaniak  wheel  0 May 12 11:04 acme
 	srwxr-xr-x  1 surbaniak  wheel  0 May 11 20:30 font
 	srwxr-xr-x  1 surbaniak  wheel  0 May  4 10:23 plumb
+	
+	$ NAMESPACE=$(pwd) 9p read acme/index | tr -s ' ' | cut -d ' ' -f 7
+	/Users/surbaniak/dev/src/slide/goacme/goacme.slide
+	+commands
+	/Users/surbaniak/dev/src/golang/src/github.com/s-urbaniak/agoc/
+	/Users/surbaniak/dev/src/slide/goacme/+Errors
 
 * Golang code completion in Acme
 
@@ -174,3 +181,16 @@ Patches:
 - 2-1 chord using the Touchpad on OSX
 - Ctrl-G completion
 - green background (I have mouches volantes)
+
+* A typical golang session in Acme
+
+A scratch project
+
+1. godoc using the 2-1 chord
+2. god, agoc
+3. [Edit ,|goimports]
+4. [go install]
+5. git init . && git add .
+6. git commit -v
+7. git loggdo
+8. right-click on any commit
