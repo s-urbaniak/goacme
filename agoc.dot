@@ -10,6 +10,8 @@ digraph G {
 	looper [shape=none, image="gopher20.png", label="\n\n\n\n\ looper", labelloc=b, pos="8.5,-1!"]
 	osExit [shape=none, image="gopher20.png", label="\n\n\n\n\os.Exit(0)", labelloc=b, pos="7,1!"]
 
+	nsf [shape=none, image="tux-yoga-r.png", label="\n\n\n\n\ngocode", labelloc=b, pos="8.5,-2.75!"]
+
 	acme -> acmeSocket [dir="both"]
 	agoc -> acmeSocket [dir="both"]
 	agoc -> sEventReader
@@ -20,4 +22,6 @@ digraph G {
 
 	sEventReader -> debouncer
 	debouncer -> looper
+
+	looper -> nsf [dir="both"]
 }

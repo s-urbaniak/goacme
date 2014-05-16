@@ -13,9 +13,10 @@ An editor, shell, window system hybrid.
 
 * History of Acme
 
-- Developed by Rob Pike in the for the Plan9 OS
+Developed by Rob Pike in the for the Plan9 OS
 
-- _plan9port_ Ported by Russ Cox to:
+Ported (plan9port) by Russ Cox to:
+
 1. Linux
 2. OSX
 3. *BSD (FreeBSD, NetBSD, OpenBSD)
@@ -58,6 +59,19 @@ Hmm ... worth a try, don't you think?
 - No plugin API, no language binding
 - WAT?
 
+* Showcase
+
+A scratch Go project in Acme
+
+- [acd $GOPATH/src/github.com/s-urbaniak]
+- mkdir foo && touch foo.go
+- [ap godoc], god, agoc
+- [Edit ,|goimports], [go install], [Watch go test -v]
+- git init . && git add .
+- git commit -v
+- git loggdo
+- right-click on any commit
+
 * Idioms
 
 - Heavy 3-button mouse usage, contrasting vim/emacs keyboard focus
@@ -65,16 +79,20 @@ Hmm ... worth a try, don't you think?
 
 Extend Acme by using:
 
-1. The sam command language (regular expressions on steroids, interaction with external commands)
+1. The sam command language (regular expressions, interaction with external commands)
 2. Plumbing (regular expression rules for invoking external programs)
 3. Using the 9P file system interface (focus of this talk)
 
 * 9P protocol
 
-- A distributed resource protocol initially developed for Plan9 (~ CIFS/VFS)
-- The most flexible solution to extend Acme
+- A distributed client/server resource protocol initially developed for Plan9 (~ CIFS/VFS)
+- Client and server communicate using a well defined bidirectional interface
+- Servers provide hierarchical file systems, often synthesized
+- Clients access server resources using 9P messages
 
-* plan9port 9P protocol@OSX
+In Plan 9, it's not "everything is a file", it's "everything has the same interface". And that interface is "file *system*". Very different. (Rob Pike@Twitter)
+
+* plan9port 9P@OSX or Linux
 
 - 9P resources are available as Unix sockets
 - The namespace defines the directory they are available in
@@ -93,6 +111,19 @@ Extend Acme by using:
 	/Users/surbaniak/dev/src/golang/src/github.com/s-urbaniak/agoc/
 	/Users/surbaniak/dev/src/slide/goacme/+Errors
 
+* Acme@9P
+
+Acme serves a lot of resources using 9P:
+
+- current (non saved) versions of files
+- current state of all windows
+- control files for controlling Acme itself
+- NEW (Apr 30): a log of window events
+
+Acme 9P golang binding:
+
+	$ go get code.google.com/p/goplan9/plan9/acme
+
 * Golang code completion in Acme
 
 .image challenge.jpg
@@ -100,9 +131,14 @@ Extend Acme by using:
 - There is golang code completion in vim
 - How hard can it be to integrate https://github.com/nsf/gocode in Acme?
 
-* agoc Integration
+* Acme Go code completion (agoc)
 
 .image agoc.png
+
+* How to install agoc?
+
+	$ go get github.com/nsf/gocode
+	$ go get github.com/s-urbaniak/agoc
 
 * Why is Acme working for me?
 
@@ -123,11 +159,12 @@ Acme:
 
 * Extending other editors
 
-In a strict sense, none of the other editors allows "plug-ins", but "inside-ins".
+Existing editors have "inside-ins", not "plug-ins".
 
-Vim needs plugins written in vimscript/Python, Emacs in Lisp, Sublime in Python, Atom in Coffeescript.
+- Vim executes vimscript/Python, Emacs executes Lisp
+- Sublime exectues Python, Atom executes Coffeescript, ...
 
-What happens if you have plenty of them (my experience):
+What happens if you have plenty of these "inside-ins":
 
 - Your editor becomes slow, becomes Eclipse'ish
 - Plugins start to intertwine with others badly
@@ -181,16 +218,3 @@ Patches:
 - 2-1 chord using the Touchpad on OSX
 - Ctrl-G completion
 - green background (I have mouches volantes)
-
-* A typical golang session in Acme
-
-A scratch project
-
-1. godoc using the 2-1 chord
-2. god, agoc
-3. [Edit ,|goimports]
-4. [go install]
-5. git init . && git add .
-6. git commit -v
-7. git loggdo
-8. right-click on any commit
